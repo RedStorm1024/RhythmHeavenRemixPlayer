@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="C:/Users/valen/Documents/jackson-annotations-2.12.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/valen/Documents/jackson-core-2.12.3.jar"/>
 	<classpathentry kind="lib" path="C:/Users/valen/Documents/jackson-databind-2.12.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/beads.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/beads-io.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

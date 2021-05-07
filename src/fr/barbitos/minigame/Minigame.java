@@ -14,7 +14,7 @@ public abstract class Minigame {
 	
 	public void draw(Graphics2D g2D) {}
 	
-	public void drawSprite(Sprite s, BufferedImage spriteSheet, Graphics2D g2D) {
+	public static void drawSprite(Sprite s, BufferedImage spriteSheet, Graphics2D g2D) {
 		for(SpritePart part: s.getParts()) {
 			BufferedImage img = Image.crop(spriteSheet, part.getRegionX(), part.getRegionY(), part.getRegionW(), part.getRegionH());
 			

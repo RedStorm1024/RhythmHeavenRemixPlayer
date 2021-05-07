@@ -1,6 +1,9 @@
 package fr.barbitos.brcad;
 
-import java.util.ArrayList;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import fr.barbitos.minigame.Minigame;
 
 public class Animation {
 	private AnimationStep[] steps;
@@ -28,6 +31,14 @@ public class Animation {
 			x += step.getDelay();
 		}
 		return x;
+	}
+	
+	public void drawStep(int animationFrame, BRCAD brcad, BufferedImage spriteSheet, Graphics2D g2D) {
+		AnimationStep step = getStepToDraw(animationFrame % getFrameCount());
+		if(step != null) {
+			Minigame.drawSprite(brcad.getSprites()[step.getSpriteIndex()], spriteSheet, g2D);
+		}
+		
 	}
 	
 }
