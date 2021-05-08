@@ -12,8 +12,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.barbitos.brcad.Animation;
-import fr.barbitos.brcad.AnimationStep;
 import fr.barbitos.brcad.BRCAD;
+import fr.barbitos.brcad.Sprite;
 import fr.barbitos.main.Game;
 import fr.barbitos.main.Handler;
 
@@ -123,7 +123,9 @@ public class HoleInOne extends Minigame{
 	GOLFMAN_GOLFMAN_TEST1 = 11,
 	GOLFMAN_GOLFMAN_TEST2 = 12,
 	GOLFMAN_GOLFMAN_TEST3 = 13;	
-	
+
+	private static final int SCREEN_OFFSET_X = 95, SCREEN_OFFSET_Y = 282;
+	private static final int SCREEN_WIDTH = 836, SCREEN_HEIGHT = 454;
 	
 	private Handler handler;
 	private Game game;
@@ -159,15 +161,24 @@ public class HoleInOne extends Minigame{
 	
 	public void draw(Graphics2D g2D) {
 		int frame = game.getCurrentFrame();
+		
+		holeInOneBG.getAnimations()[GOLF_BG_BG_SKY].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, frame, 0);
+		//holeInOneBG.getAnimations()[GOLF_BG_BG_CLOUD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		//holeInOneBG.getAnimations()[GOLF_BG_BG_AIRPLANE].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		//holeInOneBG.getAnimations()[GOLF_BG_BG_BIRD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		//holeInOneBG.getAnimations()[GOLF_BG_BG_SEA].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, frame, 0);
+		//holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		//holeInOneBG.getAnimations()[GOLF_BG_BG_GROUND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		
+		/*Animation anim = holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT];
+		Sprite sprite = holeInOneMonkey.getSprites()[anim.getStepToDraw(frame % anim.getFrameCount()).getSpriteIndex()];
+		int offset = sprite.getParts()[0].getPosY() - 482;*/
+		
 
-		holeInOneBG.getAnimations()[GOLF_BG_BG_SKY].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_CLOUD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_AIRPLANE].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_BIRD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_SEA].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_GROUND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		/*holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_SHADOW].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, SCREEN_OFFSET_X, SCREEN_OFFSET_Y);
 		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
+		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_FACE_JUST].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
+		*/
 	}
 }
 
