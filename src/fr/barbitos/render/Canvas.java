@@ -24,6 +24,6 @@ public class Canvas extends JComponent {
 		Graphics2D g2D = (Graphics2D) g;
 
 		
-		game.currentGame.draw(g2D);
+		game.currentGame.draw(g2D, this);
 	}
 }

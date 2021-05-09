@@ -11,11 +11,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.barbitos.brcad.Animation;
 import fr.barbitos.brcad.BRCAD;
-import fr.barbitos.brcad.Sprite;
 import fr.barbitos.main.Game;
 import fr.barbitos.main.Handler;
+import fr.barbitos.render.Canvas;
 
 public class HoleInOne extends Minigame{
 
@@ -125,7 +124,7 @@ public class HoleInOne extends Minigame{
 	GOLFMAN_GOLFMAN_TEST3 = 13;	
 
 	private static final int SCREEN_OFFSET_X = 95, SCREEN_OFFSET_Y = 282;
-	private static final int SCREEN_WIDTH = 836, SCREEN_HEIGHT = 454;
+	private static final int CAMERA_WIDTH = 836, CAMERA_HEIGHT = 454;
 	
 	private Handler handler;
 	private Game game;
@@ -159,16 +158,16 @@ public class HoleInOne extends Minigame{
 		
 	}
 	
-	public void draw(Graphics2D g2D) {
+	public void draw(Graphics2D g2D, Canvas c) {
 		int frame = game.getCurrentFrame();
 		
-		holeInOneBG.getAnimations()[GOLF_BG_BG_SKY].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, frame, 0);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_CLOUD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_AIRPLANE].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_BIRD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_SEA].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, frame, 0);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_GROUND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_SKY].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_CLOUD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_AIRPLANE].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_BIRD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_SEA].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_GROUND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
 		
 		/*Animation anim = holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT];
 		Sprite sprite = holeInOneMonkey.getSprites()[anim.getStepToDraw(frame % anim.getFrameCount()).getSpriteIndex()];
@@ -179,6 +178,14 @@ public class HoleInOne extends Minigame{
 		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
 		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_FACE_JUST].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
 		*/
+		
+		double cameraStretch = Math.min((double)c.getWidth()/(double)CAMERA_WIDTH, (double)c.getHeight()/(double)CAMERA_HEIGHT);
+		
+		g2D.fillRect(0, 0, (int)(c.getWidth() - CAMERA_WIDTH*cameraStretch)/2, c.getHeight());
+		g2D.fillRect(c.getWidth() - (int)(c.getWidth() - CAMERA_WIDTH*cameraStretch)/2, 0, (int)(c.getWidth() - CAMERA_WIDTH*cameraStretch)/2, c.getHeight());
+		g2D.fillRect(0, 0, c.getWidth(), (int)(c.getHeight() - CAMERA_HEIGHT*cameraStretch)/2);
+		g2D.fillRect(0, c.getHeight() - (int)(c.getHeight() - CAMERA_HEIGHT*cameraStretch)/2, c.getWidth(), (int)(c.getHeight() - CAMERA_HEIGHT*cameraStretch)/2);
+		
 	}
 }
 

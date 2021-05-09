@@ -9,10 +9,10 @@ import fr.barbitos.main.Handler;
 
 public class Window implements Runnable {
 	
-	JFrame frame;
-	Canvas canvas;
-	Handler handler;
-	Game game;
+	public JFrame frame;
+	public Canvas canvas;
+	private Handler handler;
+	private Game game;
 	
 	public Window(Handler handler) {
 		this.handler = handler;

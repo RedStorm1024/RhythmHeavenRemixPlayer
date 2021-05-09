@@ -1,14 +1,14 @@
 package fr.barbitos.brcad;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import fr.barbitos.minigame.Minigame;
+import javax.swing.JComponent;
+
+import fr.barbitos.render.Canvas;
 import fr.barbitos.render.Image;
-import javafx.scene.transform.Affine;
 
 public class Animation {
 	private AnimationStep[] steps;
@@ -38,20 +38,27 @@ public class Animation {
 		return x;
 	}
 	
-	public void drawStep(int animationFrame, BRCAD brcad, BufferedImage spriteSheet, Graphics2D g2D, int x, int y) {
+	public void drawStep(int animationFrame, BRCAD brcad, BufferedImage spriteSheet, Graphics2D g2D, Canvas c, int cameraOffsetX, int cameraOffsetY, int cameraWidth, int cameraHeight, int x, int y) {
 		AnimationStep step = getStepToDraw(animationFrame % getFrameCount());
 		if(step != null) {
 			Sprite s = brcad.getSprites()[step.getSpriteIndex()];
 			for (SpritePart part : s.getParts()) {
 				AffineTransform save = g2D.getTransform();
 				
-				g2D.translate(part.getPosX(), part.getPosY());
+				double cameraStretch = Math.min((double)c.getWidth()/(double)cameraWidth, (double)c.getHeight()/(double)cameraHeight);
 				
+				g2D.translate((c.getWidth() - cameraWidth*cameraStretch)/2, (c.getHeight() - cameraHeight*cameraStretch)/2);
+				g2D.translate(-cameraOffsetX * cameraStretch, -cameraOffsetY * cameraStretch);
+				g2D.translate(part.getPosX() * cameraStretch, part.getPosY() * cameraStretch);
+				
+				
+				g2D.scale(cameraStretch, cameraStretch);
 				g2D.translate(part.getRegionW()*part.getStretchX()/2, part.getRegionH()*part.getStretchY()/2);
 				g2D.rotate(Math.toRadians(part.getRotation()));
 
 				if(part.isFlipX()) g2D.scale(-1, 1);
 				if(part.isFlipY()) g2D.scale(1, -1);
+				
 				g2D.translate(-part.getRegionW()*part.getStretchX()/2, -part.getRegionH()*part.getStretchY()/2);
 				
 				g2D.scale(part.getStretchX(), part.getStretchY());
@@ -78,7 +85,7 @@ public class Animation {
 		
 	}
 	
-	public void drawStep(int animationFrame, BRCAD brcad, BufferedImage spriteSheet, Graphics2D g2D) {
-		drawStep(animationFrame, brcad, spriteSheet, g2D, 0, 0);
+	public void drawStep(int animationFrame, BRCAD brcad, BufferedImage spriteSheet, Graphics2D g2D, Canvas c, int cameraOffsetX, int cameraOffsetY, int cameraWidth, int cameraHeight) {
+		drawStep(animationFrame, brcad, spriteSheet, g2D, c, cameraOffsetX, cameraOffsetY, cameraWidth, cameraHeight, 0, 0);
 	}
 }
