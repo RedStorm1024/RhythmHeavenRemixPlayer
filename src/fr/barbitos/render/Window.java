@@ -25,7 +25,7 @@ public class Window implements Runnable {
 		canvas = new Canvas(handler);
 		frame.setVisible(true);
 		frame.add(canvas);
-		frame.setSize(1000, 1000);
+		frame.setSize(836, 454);
 	}
 
 	public void run(){
