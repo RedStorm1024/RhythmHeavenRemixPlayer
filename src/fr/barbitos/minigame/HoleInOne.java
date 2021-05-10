@@ -50,7 +50,6 @@ public class HoleInOne extends Minigame{
 	GOLF_BG_SPLASH_02 = 26, 
 	GOLF_BG_TEST_00 = 27;	
 	
-	
 	@SuppressWarnings("unused")
 	private static final int
 	GOLF_BG_EFFECT_SPLASH_SHOW = 0,
@@ -123,7 +122,18 @@ public class HoleInOne extends Minigame{
 	GOLFMAN_GOLFMAN_TEST1 = 11,
 	GOLFMAN_GOLFMAN_TEST2 = 12,
 	GOLFMAN_GOLFMAN_TEST3 = 13;	
+<<<<<<< Updated upstream:src/fr/barbitos/minigame/HoleInOne.java
 	
+=======
+
+	@SuppressWarnings("unused")
+	private static final int
+	MONKEY_CUE = 0,
+	MANDRILL_CUE = 1;
+
+	private static final int SCREEN_OFFSET_X = 90, SCREEN_OFFSET_Y = 280;
+	private static final int CAMERA_WIDTH = 832, CAMERA_HEIGHT = 468;
+>>>>>>> Stashed changes:src/fr/barbitos/remix/HoleInOne.java
 	
 	private Handler handler;
 	private Game game;
@@ -160,6 +170,7 @@ public class HoleInOne extends Minigame{
 	public void draw(Graphics2D g2D) {
 		int frame = game.getCurrentFrame();
 
+<<<<<<< Updated upstream:src/fr/barbitos/minigame/HoleInOne.java
 		holeInOneBG.getAnimations()[GOLF_BG_BG_SKY].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
 		holeInOneBG.getAnimations()[GOLF_BG_BG_CLOUD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
 		holeInOneBG.getAnimations()[GOLF_BG_BG_AIRPLANE].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
@@ -168,6 +179,25 @@ public class HoleInOne extends Minigame{
 		holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
 		holeInOneBG.getAnimations()[GOLF_BG_BG_GROUND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D);
 		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
+=======
+		animationStartBeat = beat - beat%4;
+		framesSinceBeat = (int)(game.getFrame(timePassed) - game.getFrame((animationStartBeat/BPM)*60000));
+		holeInOneBG.getAnimations()[GOLF_BG_ZOOM_00].drawStep(framesSinceBeat, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 60, -14);
+		
+		/*animationStartBeat = (int)beat;
+		framesSinceBeat = (int)(game.getFrame(timePassed) - game.getFrame((animationStartBeat/BPM)*60000));
+		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(framesSinceBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 60, -14);
+		 */
+		
+		
+		double cameraStretch = Math.min((double)c.getWidth()/(double)CAMERA_WIDTH, (double)c.getHeight()/(double)CAMERA_HEIGHT);
+		
+		g2D.fillRect(0, 0, (int)(c.getWidth() - CAMERA_WIDTH*cameraStretch)/2, c.getHeight());
+		g2D.fillRect(c.getWidth() - (int)(c.getWidth() - CAMERA_WIDTH*cameraStretch)/2, 0, (int)(c.getWidth() - CAMERA_WIDTH*cameraStretch)/2, c.getHeight());
+		g2D.fillRect(0, 0, c.getWidth(), (int)(c.getHeight() - CAMERA_HEIGHT*cameraStretch)/2);
+		g2D.fillRect(0, c.getHeight() - (int)(c.getHeight() - CAMERA_HEIGHT*cameraStretch)/2, c.getWidth(), (int)(c.getHeight() - CAMERA_HEIGHT*cameraStretch)/2);
+		
+>>>>>>> Stashed changes:src/fr/barbitos/remix/HoleInOne.java
 	}
 }
 

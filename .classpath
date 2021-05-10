@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/valen/Documents/jackson-annotations-2.12.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/valen/Documents/jackson-core-2.12.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/valen/Documents/jackson-databind-2.12.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/valen/Documents/beads.jar"/>
-	<classpathentry kind="lib" path="C:/Users/valen/Documents/beads-io.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/GitHub/RhythmHeavenRemixPlayer/src/jackson-annotations-2.12.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/GitHub/RhythmHeavenRemixPlayer/src/jackson-core-2.12.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/GitHub/RhythmHeavenRemixPlayer/src/jackson-databind-2.12.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/GitHub/RhythmHeavenRemixPlayer/src/beads.jar"/>
+	<classpathentry kind="lib" path="C:/Users/valen/Documents/GitHub/RhythmHeavenRemixPlayer/src/beads-io.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
