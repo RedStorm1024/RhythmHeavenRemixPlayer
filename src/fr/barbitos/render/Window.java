@@ -1,5 +1,6 @@
 package fr.barbitos.render;
 
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
@@ -23,9 +24,10 @@ public class Window implements Runnable {
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		canvas = new Canvas(handler);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setUndecorated(true);
 		frame.setVisible(true);
 		frame.add(canvas);
-		frame.setSize(836, 454);
 	}
 
 	public void run(){
@@ -33,7 +35,7 @@ public class Window implements Runnable {
 		while(game.running) {
 			frame.repaint();
 			try {
-				Thread.sleep(10);
+				Thread.sleep(16);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

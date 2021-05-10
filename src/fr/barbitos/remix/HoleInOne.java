@@ -1,4 +1,4 @@
-package fr.barbitos.minigame;
+package fr.barbitos.remix;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -123,8 +123,8 @@ public class HoleInOne extends Minigame{
 	GOLFMAN_GOLFMAN_TEST2 = 12,
 	GOLFMAN_GOLFMAN_TEST3 = 13;	
 
-	private static final int SCREEN_OFFSET_X = 95, SCREEN_OFFSET_Y = 282;
-	private static final int CAMERA_WIDTH = 836, CAMERA_HEIGHT = 454;
+	private static final int SCREEN_OFFSET_X = 90, SCREEN_OFFSET_Y = 280;
+	private static final int CAMERA_WIDTH = 832, CAMERA_HEIGHT = 468;
 	
 	private Handler handler;
 	private Game game;
@@ -158,26 +158,50 @@ public class HoleInOne extends Minigame{
 		
 	}
 	
-	public void draw(Graphics2D g2D, Canvas c) {
-		int frame = game.getCurrentFrame();
+	public void draw(Graphics2D g2D, Canvas c, double beat, double BPM) {
+		int frame = (int)game.getCurrentFrame();
 		
 		holeInOneBG.getAnimations()[GOLF_BG_BG_SKY].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
 		holeInOneBG.getAnimations()[GOLF_BG_BG_CLOUD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_AIRPLANE].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_BIRD].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
 		holeInOneBG.getAnimations()[GOLF_BG_BG_SEA].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
-		holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
+		holeInOneBG.getAnimations()[GOLF_BG_BG_ISLAND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 0, -9);
 		holeInOneBG.getAnimations()[GOLF_BG_BG_GROUND].drawStep(frame, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT);
 		
-		/*Animation anim = holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT];
-		Sprite sprite = holeInOneMonkey.getSprites()[anim.getStepToDraw(frame % anim.getFrameCount()).getSpriteIndex()];
-		int offset = sprite.getParts()[0].getPosY() - 482;*/
+		double timePassed = (beat/BPM)*60000;
+		
+		int currentAnimation;
+		double animationStartBeat;
+		if((int)beat%4==0) {
+			currentAnimation = GOLFMAN_GOLFMAN_BEAT;
+			animationStartBeat = beat - beat%4;
+		}else if((int)beat%4==1) {
+			currentAnimation = GOLFMAN_GOLFMAN_READY;
+			animationStartBeat = beat - beat%4 + 1;
+		}else {
+			currentAnimation = GOLFMAN_GOLFMAN_JUST;
+			animationStartBeat = beat - beat%4 + 2;
+		}
+		
+		
+		int framesSinceBeat = (int)(game.getFrame(timePassed) - game.getFrame((animationStartBeat/BPM)*60000));
+		holeInOneGolfman.getAnimations()[GOLFMAN_GOLFMAN_SHADOW].drawStep(0, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
+		if(framesSinceBeat < holeInOneGolfman.getAnimations()[currentAnimation].getFrameCount()) {
+			holeInOneGolfman.getAnimations()[currentAnimation].drawStep(framesSinceBeat, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
+		}else {
+			holeInOneGolfman.getAnimations()[currentAnimation].drawStep(-1, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);	
+		}
 		
 
-		/*holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_SHADOW].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, SCREEN_OFFSET_X, SCREEN_OFFSET_Y);
-		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
-		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_FACE_JUST].drawStep(frame, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D);
-		*/
+		animationStartBeat = beat - beat%4;
+		framesSinceBeat = (int)(game.getFrame(timePassed) - game.getFrame((animationStartBeat/BPM)*60000));
+		holeInOneBG.getAnimations()[GOLF_BG_ZOOM_00].drawStep(framesSinceBeat, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 60, -14);
+		
+		/*animationStartBeat = (int)beat;
+		framesSinceBeat = (int)(game.getFrame(timePassed) - game.getFrame((animationStartBeat/BPM)*60000));
+		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(framesSinceBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 60, -14);
+		 */
+		
+		
 		
 		double cameraStretch = Math.min((double)c.getWidth()/(double)CAMERA_WIDTH, (double)c.getHeight()/(double)CAMERA_HEIGHT);
 		

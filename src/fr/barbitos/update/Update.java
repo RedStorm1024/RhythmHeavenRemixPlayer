@@ -24,9 +24,10 @@ public class Update implements Runnable{
 	public void run() {
 		while(game.running) {
 			game.currentTime = System.currentTimeMillis();
-			game.setCurrentFrame((int)(game.currentTime - game.timeAtStart)/33);
+			
+			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(16);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
