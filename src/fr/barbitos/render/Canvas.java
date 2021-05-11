@@ -23,6 +23,6 @@ public class Canvas extends JComponent {
 	public void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D) g;
 		
-		game.currentGame.draw(g2D);
+		game.currentRemix.update(g2D, this);
 	}	
 }

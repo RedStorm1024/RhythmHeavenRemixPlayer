@@ -1,44 +1,216 @@
 package fr.barbitos.minigame;
 
-import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
-import fr.barbitos.brcad.Sprite;
-import fr.barbitos.brcad.SpritePart;
-import fr.barbitos.render.Image;
+import fr.barbitos.remix.data.Cue;
+import fr.barbitos.render.Canvas;
 
 public abstract class Minigame {
+	public static enum MinigameEnum {
+		KarateManGBA,
+		RhythmTweezersGBA,
+		MarchingOrdersGBA,
+		SpaceBallGBA,
+		ClappyTrioGBA,
+		SneakySpiritsGBA,
+		SamuraiSliceGBA,
+		RatRaceGBA,
+		SickBeatsGBA,
+		BonOdoriGBA,
+		WizardsWaltzGBA,
+		ShowtimeGBA,
+		BunnyHopGBA,
+		TramAndPaulineGBA,
+		SpaceDanceGBA,
+		QuizShowGBA,
+		NightWalkGBA,
+		PowerCalligraphyGBA,
+		PolyrhythmGBA,
+		RapMenGBA,
+		BouncyRoadGBA,
+		NinjaBodyguardGBA,
+		TossBoysGBA,
+		FireworksGBA,
+		TapTrialGBA,
+		ClappyTrio2GBA,
+		BonOdori2GBA,
+		RapMen2GBA,
+		SpaceDance2GBA,
+		TapTrial2GBA,
+		KarateMan2GBA,
+		RhythmTweezers2GBA,
+		NinjaBodyguard2GBA,
+		NightWalk2GBA,
+		MarchingOrders2GBA,
+		BouncyRoad2GBA,
+		TossBoys2GBA,
+		Polyrhythm2GBA,
+		SpaceBall2GBA,
+		SneakySpirits2GBA, //TODO add side games & remix versions of GBA games
+		BuiltToScaleDS,
+		GleeClubDS,
+		FillbotsDS,
+		FanClubDS,
+		RhythmRallyDS,
+		ShootEmUpDS,
+		BlueBirdsDS,
+		MoaiDooWopDS,
+		LoveLizardsDS,
+		CropStompDS,
+		FreezeFrameDS,
+		TheDazzlesDS,
+		MunchyMonkDS,
+		DjSchoolDS,
+		DrummerDuelDS,
+		LoveLabDS,
+		SplashdownDS,
+		BigRockFinishDS,
+		DogNinjaDS,
+		FrogHopDS,
+		SpaceSoccerDS,
+		LockstepDS,
+		RockersDS,
+		KarateManDS,
+		AirboarderDS,
+		BuiltToScale2DS,
+		TheDazzles2DS,
+		FrogHop2DS,
+		FanClub2DS,
+		RhythmRally2DS,
+		Fillbots2DS,
+		BlueBirds2DS,
+		Lockstep2DS,
+		MoaiDooWop2DS,
+		KarateMan2DS,
+		GleeClub2DS,
+		SpaceSoccer2DS,
+		ShootEmUp2DS,
+		Splashdown2DS,
+		MunchyMonk2DS,
+		Rockers2DS, //TODO add side games & remix versions of DS games
+		HoleInOneFever,
+		ScrewbotFactoryFever,
+		SeeSawFever,
+		DoubleDateFever,
+		ForkLifterFever,
+		TambourineFever,
+		BoardMeetingFever,
+		MonkeyWatchFever,
+		WorkingDoughFever,
+		BuiltToScaleFever,
+		AirRallyFever,
+		FigureFighterFever,
+		RingsideFever,
+		PackingPestsFever,
+		MicroRowFever,
+		SamuraiSliceFever,
+		CatchOfTheDayFever,
+		FlipperFlopFever,
+		ExhibitionMatchFever,
+		FlockStepFever,
+		LaunchPartyFever,
+		DonkDonkFever,
+		BossaNovaFever,
+		LoveRapFever,
+		TapTroupeFever,
+		ShrimpShuffleFever,
+		CheerReadersFever,
+		KarateManFever,
+		NightWalkFever,
+		SamuraiSlice2Fever,
+		WorkingDough2Fever,
+		BuiltToScale2Fever,
+		DoubleDate2Fever,
+		LoveRap2Fever,
+		CheerReaders2Fever,
+		HoleInOne2Fever,
+		ScrewbotFactory2Fever,
+		FigureFighter2Fever,
+		MicroRow2Fever,
+		PackingPests2Fever,
+		KarateMan2Fever, //TODO add side games and remix versions of WII games
+		KarateManMegamix,
+		FillbotsMegamix,
+		AirRallyMegamix,
+		CatchyTuneMegamix,
+		RhythmTweezersMegamix,
+		GleeClubMegamix,
+		FigureFighterMegamix,
+		FruitBasketMegamix,
+		ClappyTrioMegamix,
+		ShootEmUpMegamix,
+		MicroRowMegamix,
+		FirstContactMegamix,
+		BunnyHopMegamix,
+		AirboarderMegamix,
+		ExhibitionMatchMegamix,
+		TongueLashingMegamix,
+		SneakySpiritsMegamix,
+		RhythmRallyMegamix,
+		FlipperFlopMegamix,
+		LumBEARjackMegamix,
+		PowerCalligraphyMegamix,
+		BlueBirdsMegamix,
+		FlockStepMegamix,
+		SuperSamuraiSliceMegamix,
+		SpaceBallMegamix,
+		DogNinjaMegamix,
+		HoleInOneMegamix,
+		SumoBrothersMegamix,
+		KarateMan2Megamix,
+		FillBots2Megamix,
+		AirRally2Megamix,
+		CatchyTune2Megamix,
+		RhythmTweezers2Megamix,
+		GleeClub2Megamix,
+		FigureFighter2Megamix,
+		FruitBasket2Megamix,
+		ClappyTrio2Megamix,
+		ShootEmUp2Megamix,
+		MicroRow2Megamix,
+		FirstContact2Megamix,
+		RatRaceMegamix,
+		FanClubMegamix,
+		WorkingDoughMegamix,
+		AnimalAcrobatMegamix,
+		SneakySpirits2Megamix,
+		RhythmRally2Megamix,
+		FlipperFlop2Megamix,
+		LumBEARjack2Megamix,
+		TapTrialMegamix,
+		FrogHopMegamix,
+		RingsideMegamix,
+		Tangotronic3000Megamix,
+		NinjaBodyguardMegamix,
+		FreezeFrameMegamix,
+		LaunchPartyMegamix,
+		PajamaPartyMegamix,
+		MarchingOrdersMegamix,
+		MunchyMonkMegamix,
+		SeeSawMegamix,
+		BlueBearMegamix,
+		SpaceDanceMegamix,
+		LockstepMegamix,
+		CheerReadersMegamix,
+		KittiesMegamix,
+		ClappyTrio3Megamix,
+		FanClub2Megamix,
+		FigureFighter3Megamix,
+		JungleAcrobat2Megamix,
+		TapTrial2Megamix,
+		FrogHop2Megamix,
+		HoleInOne2Megamix,
+		SuperSamuraiSlice2Megamix,
+		SpaceDance2Megamix,
+		RhythmRally3Megamix,
+		WorkingDough2Megamix,
+		KarateMan3Megamix, //TODO add side games and remix versions of Megamix games
+	};
 	
+	
+
 	public Minigame() {}
 	
-	public void draw(Graphics2D g2D) {}
-	
-	public static void drawSprite(Sprite s, BufferedImage spriteSheet, Graphics2D g2D) {
-		for(SpritePart part: s.getParts()) {
-			BufferedImage img = Image.crop(spriteSheet, part.getRegionX(), part.getRegionY(), part.getRegionW(), part.getRegionH());
-			
-			float angle = part.getRotation();
-			
-			img = Image.scale(img, part.getStretchX(), part.getStretchY());
-			if(part.isFlipX()) img = Image.flipX(img);
-			if(part.isFlipY()) img = Image.flipY(img);
-			
-			double oldWidth = img.getWidth();
-			double oldHeight = img.getHeight();
-			
-			img = Image.rotate(img, angle);
-			
-			float alpha = (part.getOpacity() & 0xff) / 255f;
-			
-			AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-			g2D.setComposite(composite);
-	
-			int drawX = (int)(part.getPosX() - img.getWidth()/2 + oldWidth/2);
-			int drawY = (int)(part.getPosY() - img.getHeight()/2 + oldHeight/2);
-			
-			g2D.drawImage(img, drawX, drawY, null);
-		}
-	}
+	public void draw(Graphics2D g2D, Canvas c, double beat, double BPM, Cue[] cues) {}
 	
 }
