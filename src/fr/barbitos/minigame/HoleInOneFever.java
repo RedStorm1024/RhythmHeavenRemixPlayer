@@ -19,6 +19,7 @@ import fr.barbitos.render.Canvas;
 
 public class HoleInOneFever extends Minigame{
 
+	//BG animation names
 	@SuppressWarnings("unused")
 	private static final int 
 	GOLF_BG_BG_SKY = 0, 
@@ -49,8 +50,8 @@ public class HoleInOneFever extends Minigame{
 	GOLF_BG_SPLASH_01 = 25, 
 	GOLF_BG_SPLASH_02 = 26, 
 	GOLF_BG_TEST_00 = 27;	
-	
-	
+
+	//BG effect animation names
 	@SuppressWarnings("unused")
 	private static final int
 	GOLF_BG_EFFECT_SPLASH_SHOW = 0,
@@ -63,6 +64,7 @@ public class HoleInOneFever extends Minigame{
 	GOLF_BG_EFFECT_CELLANIM1 = 7,
 	GOLF_BG_EFFECT_CELLANIM2 = 8;
 
+	//Monkey/Mandrill animation names
 	@SuppressWarnings("unused")
 	private static final int
 	GOLF_MONKEY_MONKEY_BEAT = 0,
@@ -106,7 +108,8 @@ public class HoleInOneFever extends Minigame{
 	GOLF_MONKEY__MONKEY_FACE_HAPPY_00 = 38,
 	GOLF_MONKEY__MONKEY_FACE_HAPPY_01 = 39,
 	GOLF_MONKEY__MONKEY_INST_GOOD = 40;
-	
+
+	//Golfman animation names
 	@SuppressWarnings("unused")
 	private static final int 
 	GOLFMAN_GOLFMAN_READY = 0,
@@ -124,24 +127,23 @@ public class HoleInOneFever extends Minigame{
 	GOLFMAN_GOLFMAN_TEST2 = 12,
 	GOLFMAN_GOLFMAN_TEST3 = 13;	
 
-
-	@SuppressWarnings("unused")
-	private static final int
-	GOLFMAN_STATE_WAIT = 0,
-	GOLFMAN_STATE_READY = 1,
-	GOLFMAN_STATE_JUST = 2,
-	GOLFMAN_STATE_MISS = 3,
-	GOLFMAN_STATE_THROUGH = 4,
-	GOLFMAN_STATE_THROUGH_GORILLA = 5;
+	private static enum MonkeyState{
+		BEAT,
+		BEAT_JUST,
+		BEAT_MISS,
+		BEAT_SAD,
+		READY,
+		PITCH,
+		TURN
+	};
 	
-	@SuppressWarnings("unused")
-	private static final int
-	ZOOM_STATE_NONE = 0,
-	ZOOM_STATE_S_0 = 1,
-	ZOOM_STATE_S_1 = 2,
-	ZOOM_STATE_S_2 = 3,
-	ZOOM_STATE_L_0 = 4,
-	ZOOM_STATE_L_1 = 5;
+	private static enum MandrillState{
+		PITCH,
+		BEAT,
+		READY_S,
+		READY_L,
+		TURN
+	};
 	
 	private static final int SCREEN_OFFSET_X = 90, SCREEN_OFFSET_Y = 280;
 	private static final int CAMERA_WIDTH = 832, CAMERA_HEIGHT = 468;
@@ -189,21 +191,26 @@ public class HoleInOneFever extends Minigame{
 		
 		double timePassed = (beat/BPM)*60000;
 		
-		int golfmanAnimationState = GOLFMAN_STATE_WAIT,
-			zoomAnimationState = ZOOM_STATE_NONE;
-		double golfmanAnimationStartBeat = beat - beat%1, zoomAnimationStartBeat = beat - beat%1;
+		int golfmanAnimation = GOLFMAN_GOLFMAN_BEAT,
+			zoomAnimation = -1;
+		MonkeyState	monkeyAnimationState = MonkeyState.BEAT;
+		MandrillState mandrillAnimationState = MandrillState.BEAT;
+		double 	golfmanAnimationStartBeat = beat - beat%1,
+				zoomAnimationStartBeat = beat - beat%1,
+				monkeyAnimationStartBeat = beat - beat%1,
+				mandrillAnimationStartBeat = beat - beat%1;
 		
-		for(Cue cue : cues) {
+		for(Cue cue : cues) {//Golfman animation state
 			double cueBeat = cue.getBeat();
 			double beatDifference = beat - cueBeat;
 			if(Math.floor(beatDifference) == -1) {
 				golfmanAnimationStartBeat = cueBeat-1;
-				if(golfmanAnimationState == GOLFMAN_GOLFMAN_JUST) {
+				if(golfmanAnimation == GOLFMAN_GOLFMAN_JUST) {
 					golfmanAnimationStartBeat += ((3/game.FPS)*60/BPM);
 				}
-				golfmanAnimationState = GOLFMAN_STATE_READY;
+				golfmanAnimation = GOLFMAN_GOLFMAN_READY;
 			}else if(Math.floor(beatDifference) == 0) {
-				golfmanAnimationState = GOLFMAN_STATE_JUST;
+				golfmanAnimation = GOLFMAN_GOLFMAN_JUST;
 				golfmanAnimationStartBeat = cueBeat;
 				if(frame - game.getFrame((cueBeat/BPM)*60000) < 3) {
 					break;
@@ -211,27 +218,51 @@ public class HoleInOneFever extends Minigame{
 			}
 		}
 		
-		int currentAnimation = GOLFMAN_GOLFMAN_BEAT;
-		switch(golfmanAnimationState) {
-		case GOLFMAN_STATE_WAIT:
-			currentAnimation = GOLFMAN_GOLFMAN_BEAT;
-			break;
-		case GOLFMAN_STATE_READY:
-			currentAnimation = GOLFMAN_GOLFMAN_READY;
-			break;
-		case GOLFMAN_STATE_JUST:
-			currentAnimation = GOLFMAN_GOLFMAN_JUST;
-			break;
+		for(Cue cue : cues) {//Zoom animation state
+			double cueBeat = cue.getBeat();
+			double beatDifference = beat - cueBeat;
+			if(beatDifference >= 2 && beatDifference <= 6) {
+				zoomAnimationStartBeat = cueBeat+2;
+				zoomAnimation = GOLF_BG_ZOOM_00;
+			}
 		}
 		
+		for(Cue cue : cues) {//Monkey animation state
+			double cueBeat = cue.getBeat();
+			double beatDifference = beat - cueBeat;
+			if(Math.floor(beatDifference) == -2) {
+				if(monkeyAnimationState != MonkeyState.PITCH) {
+					monkeyAnimationStartBeat = cueBeat-2;
+					monkeyAnimationState = MonkeyState.READY;
+				}
+			}else if(Math.floor(beatDifference) == -1) {
+				monkeyAnimationStartBeat = cueBeat-1;
+				monkeyAnimationState = MonkeyState.PITCH;
+			}
+		}
 		
-		int framesSinceBeat = (int)(game.getFrame(timePassed) - game.getFrame((golfmanAnimationStartBeat/BPM)*60000));
+
+		
+		
+		int framesSinceGolfmanAnimationBeat = (int)(game.getFrame(timePassed) - game.getFrame((golfmanAnimationStartBeat/BPM)*60000));
 		holeInOneGolfman.getAnimations()[GOLFMAN_GOLFMAN_SHADOW].drawStep(0, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
-		if(framesSinceBeat < holeInOneGolfman.getAnimations()[currentAnimation].getFrameCount()) {
-			holeInOneGolfman.getAnimations()[currentAnimation].drawStep(framesSinceBeat, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
+		holeInOneGolfman.getAnimations()[golfmanAnimation].drawStep(framesSinceGolfmanAnimationBeat, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
+		
+		int framesSinceZoomAnimationBeat = (int)(game.getFrame(timePassed) - game.getFrame((zoomAnimationStartBeat/BPM)*60000));
+		if(zoomAnimation != -1) holeInOneBG.getAnimations()[zoomAnimation].drawStep(framesSinceZoomAnimationBeat, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 60, -10);	
+		
+		int framesSinceMonkeyAnimationBeat = (int)(game.getFrame(timePassed) - game.getFrame((monkeyAnimationStartBeat/BPM)*60000));
+		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_SHADOW].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
+		if(monkeyAnimationState == MonkeyState.READY) {
+			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_READY_S].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
+		}else if (monkeyAnimationState == MonkeyState.PITCH) {
+			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_PITCH].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
 		}else {
-			holeInOneGolfman.getAnimations()[currentAnimation].drawStep(-1, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);	
+			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
+			int monkeyHeadOffsetY =  holeInOneMonkey.getSprites()[holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].getStepToDraw(framesSinceMonkeyAnimationBeat).getSpriteIndex()].getParts()[0].getPosY() - 482;
+			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_FACE_JUST].drawStep(-1, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -19, 133 + monkeyHeadOffsetY);
 		}
+		
 		
 		double cameraStretch = Math.min((double)c.getWidth()/(double)CAMERA_WIDTH, (double)c.getHeight()/(double)CAMERA_HEIGHT);
 		

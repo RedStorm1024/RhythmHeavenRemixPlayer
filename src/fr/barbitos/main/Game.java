@@ -24,7 +24,7 @@ public class Game{
 		handler = new Handler(this);
 		update = new Update(handler);
 		window = new Window(handler);
-		FPS = 30;
+		FPS = 60;
 		
 		ObjectMapper mapper = new ObjectMapper();
 		

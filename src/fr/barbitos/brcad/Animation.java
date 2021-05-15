@@ -37,7 +37,7 @@ public class Animation {
 	}
 	
 	public void drawStep(int animationFrame, BRCAD brcad, BufferedImage spriteSheet, Graphics2D g2D, Canvas c, int cameraOffsetX, int cameraOffsetY, int cameraWidth, int cameraHeight, int x, int y) {
-		if(animationFrame == -1) animationFrame = getFrameCount() - 1;
+		if(animationFrame == -1 || animationFrame >= getFrameCount()) animationFrame = getFrameCount() - 1;
 		AnimationStep step = getStepToDraw(animationFrame % getFrameCount());
 		if(step != null) {
 			Sprite s = brcad.getSprites()[step.getSpriteIndex()];
