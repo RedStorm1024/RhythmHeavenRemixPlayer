@@ -1,12 +1,12 @@
-package fr.barbitos.render;
+package rhrp.render;
 
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 
-import fr.barbitos.main.Game;
-import fr.barbitos.main.Handler;
+import rhrp.main.Game;
+import rhrp.main.Handler;
 
 public class Window implements Runnable {
 	
@@ -33,9 +33,13 @@ public class Window implements Runnable {
 	public void run(){
 		init();
 		while(game.running) {
-			frame.repaint();
 			try {
-				Thread.sleep(10);
+				frame.repaint();
+			}catch(NullPointerException e) {
+				System.out.println("aaaa");
+			}
+			try {
+				Thread.sleep(16);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

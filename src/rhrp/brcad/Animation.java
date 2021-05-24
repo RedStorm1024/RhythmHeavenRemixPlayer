@@ -1,12 +1,12 @@
-package fr.barbitos.brcad;
+package rhrp.brcad;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import fr.barbitos.render.Canvas;
-import fr.barbitos.render.Image;
+import rhrp.render.Canvas;
+import rhrp.render.Image;
 
 public class Animation {
 	private AnimationStep[] steps;
@@ -25,7 +25,7 @@ public class Animation {
 			x += step.getDelay();
 			if(x >= animationFrame) return step;
 		}
-		return null;
+		return steps[steps.length - 1];
 	}
 	
 	public int getFrameCount() {

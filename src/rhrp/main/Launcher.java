@@ -1,4 +1,4 @@
-package fr.barbitos.main;
+package rhrp.main;
 
 public class Launcher {
 	public static void main(String[] args) {

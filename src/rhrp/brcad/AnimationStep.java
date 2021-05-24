@@ -1,4 +1,4 @@
-package fr.barbitos.brcad;
+package rhrp.brcad;
 
 public class AnimationStep {
 	private short delay, spriteIndex;

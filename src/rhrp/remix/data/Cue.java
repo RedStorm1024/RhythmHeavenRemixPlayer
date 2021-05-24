@@ -1,6 +1,6 @@
-package fr.barbitos.remix.data;
+package rhrp.remix.data;
 
-import fr.barbitos.minigame.Minigame.MinigameEnum;
+import rhrp.minigame.Minigame.MinigameEnum;
 
 public class Cue {
 	

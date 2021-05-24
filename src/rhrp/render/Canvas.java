@@ -1,12 +1,12 @@
-package fr.barbitos.render;
+package rhrp.render;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
 
-import fr.barbitos.main.Game;
-import fr.barbitos.main.Handler;
+import rhrp.main.Game;
+import rhrp.main.Handler;
 
 public class Canvas extends JComponent {
 	

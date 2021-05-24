@@ -1,4 +1,4 @@
-package fr.barbitos.minigame;
+package rhrp.minigame;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -11,11 +11,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.barbitos.brcad.BRCAD;
-import fr.barbitos.main.Game;
-import fr.barbitos.main.Handler;
-import fr.barbitos.remix.data.Cue;
-import fr.barbitos.render.Canvas;
+import rhrp.brcad.BRCAD;
+import rhrp.main.Game;
+import rhrp.main.Handler;
+import rhrp.remix.data.Cue;
+import rhrp.render.Canvas;
 
 public class HoleInOneFever extends Minigame{
 
@@ -259,7 +259,8 @@ public class HoleInOneFever extends Minigame{
 			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_PITCH].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
 		}else {
 			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
-			int monkeyHeadOffsetY =  holeInOneMonkey.getSprites()[holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].getStepToDraw(framesSinceMonkeyAnimationBeat).getSpriteIndex()].getParts()[0].getPosY() - 482;
+			int test = holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_BEAT].getStepToDraw(framesSinceMonkeyAnimationBeat).getSpriteIndex();
+			int monkeyHeadOffsetY =  holeInOneMonkey.getSprites()[test].getParts()[0].getPosY() - 482;
 			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_FACE_JUST].drawStep(-1, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -19, 133 + monkeyHeadOffsetY);
 		}
 		

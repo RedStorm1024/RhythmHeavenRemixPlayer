@@ -1,4 +1,4 @@
-package fr.barbitos.remix.data;
+package rhrp.remix.data;
 
 public class RemixData {
 	

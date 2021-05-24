@@ -1,4 +1,4 @@
-package fr.barbitos.main;
+package rhrp.main;
 
 public class Handler {
 	

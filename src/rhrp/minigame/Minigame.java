@@ -1,9 +1,9 @@
-package fr.barbitos.minigame;
+package rhrp.minigame;
 
 import java.awt.Graphics2D;
 
-import fr.barbitos.remix.data.Cue;
-import fr.barbitos.render.Canvas;
+import rhrp.remix.data.Cue;
+import rhrp.render.Canvas;
 
 public abstract class Minigame {
 	public static enum MinigameEnum {

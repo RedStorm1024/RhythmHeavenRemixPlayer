@@ -1,10 +1,10 @@
-package fr.barbitos.main;
+package rhrp.main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.barbitos.remix.Remix;
-import fr.barbitos.render.Window;
-import fr.barbitos.update.Update;
+import rhrp.remix.Remix;
+import rhrp.render.Window;
+import rhrp.update.Update;
 
 public class Game{
 	

@@ -1,4 +1,4 @@
-package fr.barbitos.remix;
+package rhrp.remix;
 
 
 import java.awt.Graphics2D;
@@ -10,13 +10,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.barbitos.main.Game;
-import fr.barbitos.main.Handler;
-import fr.barbitos.minigame.HoleInOneFever;
-import fr.barbitos.minigame.*;
-import fr.barbitos.remix.data.MinigameChange;
-import fr.barbitos.remix.data.RemixData;
-import fr.barbitos.render.Canvas;
+import rhrp.main.Game;
+import rhrp.main.Handler;
+import rhrp.minigame.*;
+import rhrp.remix.data.MinigameChange;
+import rhrp.remix.data.RemixData;
+import rhrp.render.Canvas;
 
 public class Remix {
 	

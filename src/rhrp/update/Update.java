@@ -1,10 +1,10 @@
 /**
  * 
  */
-package fr.barbitos.update;
+package rhrp.update;
 
-import fr.barbitos.main.Game;
-import fr.barbitos.main.Handler;
+import rhrp.main.Game;
+import rhrp.main.Handler;
 
 /**
  * @author valen
