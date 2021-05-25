@@ -206,10 +206,15 @@ public class HoleInOneFever extends Minigame{
 			if(Math.floor(beatDifference) == -1) {
 				golfmanAnimationStartBeat = cueBeat-1;
 				if(golfmanAnimation == GOLFMAN_GOLFMAN_JUST) {
-					golfmanAnimationStartBeat += ((3/game.FPS)*60/BPM);
+					golfmanAnimationStartBeat += getBeatsFromFrames(3, game.FPS, BPM);
 				}
 				golfmanAnimation = GOLFMAN_GOLFMAN_READY;
-			}else if(Math.floor(beatDifference) == 0) {
+			}
+			if(Math.floor(beatDifference + getBeatsFromFrames(7, game.FPS, BPM)) == 0) {
+				golfmanAnimation = GOLFMAN_GOLFMAN_THROUGH;
+				golfmanAnimationStartBeat = cueBeat - getBeatsFromFrames(7, game.FPS, BPM);
+			}
+			if(Math.floor(beatDifference) == 0) { //TODO change to reflect inputs when implemented
 				golfmanAnimation = GOLFMAN_GOLFMAN_JUST;
 				golfmanAnimationStartBeat = cueBeat;
 				if(frame - game.getFrame((cueBeat/BPM)*60000) < 3) {

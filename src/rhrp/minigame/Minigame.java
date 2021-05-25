@@ -206,8 +206,14 @@ public abstract class Minigame {
 		WorkingDough2Megamix,
 		KarateMan3Megamix, //TODO add side games and remix versions of Megamix games
 	};
+
+	public static double getBeatsFromFrames(double frames, double FPS, double BPM) {
+		return ((frames/FPS)/60)*BPM;
+	}
 	
-	
+	public static double getFramesFromBeats(double beats, double FPS, double BPM) {
+		return (beats/BPM)*60*FPS;
+	}
 
 	public Minigame() {}
 	

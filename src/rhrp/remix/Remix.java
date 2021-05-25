@@ -61,9 +61,9 @@ public class Remix {
 			lastChange = change;
 		}
 		
-		if(!currentGame.getClass().toString().equals("class fr.barbitos.minigame." + lastChange.getMinigame().toString())) {
+		if(!currentGame.getClass().toString().equals("class rhrp.minigame." + lastChange.getMinigame().toString())) {
 			try {
-				this.currentGame = (Minigame)Class.forName("fr.barbitos.minigame." + data.getChanges()[0].getMinigame().toString()).getDeclaredConstructor(ObjectMapper.class, Handler.class).newInstance(mapper, handler);
+				this.currentGame = (Minigame)Class.forName("rhrp.minigame." + data.getChanges()[0].getMinigame().toString()).getDeclaredConstructor(ObjectMapper.class, Handler.class).newInstance(mapper, handler);
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
 				// TODO Auto-generated catch block
