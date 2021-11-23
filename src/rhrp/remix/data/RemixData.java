@@ -6,7 +6,6 @@ public class RemixData {
 	private Cue[] cues; //Every game's cue, pattern change etc.
 	private MinigameChange[] changes; //Every time the minigame shown changes, cues from games other that the current game will still be processed but not visible/audible
 	
-	
 	public double getBPM() {
 		return bpm;
 	}

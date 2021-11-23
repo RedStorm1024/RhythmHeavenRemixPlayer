@@ -249,14 +249,14 @@ public class HoleInOneFever extends Minigame{
 
 		
 		
-		int framesSinceGolfmanAnimationBeat = (int)(game.getFrame(timePassed) - game.getFrame((golfmanAnimationStartBeat/BPM)*60000));
+		int framesSinceGolfmanAnimationBeat = (int)(game.getFrame(timePassed) - getFramesFromBeats(golfmanAnimationStartBeat, game.FPS, BPM));
 		holeInOneGolfman.getAnimations()[GOLFMAN_GOLFMAN_SHADOW].drawStep(0, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
 		holeInOneGolfman.getAnimations()[golfmanAnimation].drawStep(framesSinceGolfmanAnimationBeat, holeInOneGolfman, holeInOneGolfmanSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 215, 160);
 		
-		int framesSinceZoomAnimationBeat = (int)(game.getFrame(timePassed) - game.getFrame((zoomAnimationStartBeat/BPM)*60000));
+		int framesSinceZoomAnimationBeat = (int)(game.getFrame(timePassed) - getFramesFromBeats(zoomAnimationStartBeat, game.FPS, BPM));
 		if(zoomAnimation != -1) holeInOneBG.getAnimations()[zoomAnimation].drawStep(framesSinceZoomAnimationBeat, holeInOneBG, holeInOneBGSpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, 60, -10);	
 		
-		int framesSinceMonkeyAnimationBeat = (int)(game.getFrame(timePassed) - game.getFrame((monkeyAnimationStartBeat/BPM)*60000));
+		int framesSinceMonkeyAnimationBeat = (int)(game.getFrame(timePassed) - getFramesFromBeats(monkeyAnimationStartBeat, game.FPS, BPM));
 		holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_SHADOW].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);
 		if(monkeyAnimationState == MonkeyState.READY) {
 			holeInOneMonkey.getAnimations()[GOLF_MONKEY_MONKEY_READY_S].drawStep(framesSinceMonkeyAnimationBeat, holeInOneMonkey, holeInOneMonkeySpriteSheet, g2D, c, SCREEN_OFFSET_X, SCREEN_OFFSET_Y, CAMERA_WIDTH, CAMERA_HEIGHT, -20, 160);

@@ -2,6 +2,7 @@ package rhrp.main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import rhrp.gameplay.InputListener;
 import rhrp.remix.Remix;
 import rhrp.render.Window;
 import rhrp.update.Update;
@@ -24,7 +25,11 @@ public class Game{
 		handler = new Handler(this);
 		update = new Update(handler);
 		window = new Window(handler);
+		
+
+		
 		FPS = 60;
+		
 		
 		ObjectMapper mapper = new ObjectMapper();
 		

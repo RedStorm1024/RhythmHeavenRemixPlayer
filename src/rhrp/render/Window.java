@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 
 import javax.swing.JFrame;
 
+import rhrp.gameplay.InputListener;
 import rhrp.main.Game;
 import rhrp.main.Handler;
 
@@ -28,6 +29,7 @@ public class Window implements Runnable {
 		frame.setUndecorated(true);
 		frame.setVisible(true);
 		frame.add(canvas);
+		frame.addKeyListener(new InputListener(handler));
 	}
 
 	public void run(){

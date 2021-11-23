@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import rhrp.gameplay.RemixInputs;
 import rhrp.main.Game;
 import rhrp.main.Handler;
 import rhrp.minigame.*;
@@ -25,13 +26,24 @@ public class Remix {
 	
 	public Minigame currentGame;
 	public RemixData data;
+	public RemixInputs inputs;
 	
+	//INPUT/CUES:
+	/* Each cue gets divided into every input the cue contains (for example the go-go-go from figure fighter gets divided into 3, might add decorative cues without any input related to them)
+	 * For each subcue, they'll have a timing related to it and variables telling if the cue has been satisfied and which input satisfied it + methods to know how good the timing was (barely, miss, perfect...)
+	 * Whenever a new input happens, it checks for every subcue if it is already satisfied and if it hasn't been, if the input is in the timing of the subcue
+	 * Store information in the input variable about which subcue it satisfied, if it did
+	 * Most likely, every visuals will care either about:
+	 * -The last subcue (monkey preparing to throw a golfball)
+	 * -The last input (golfman trying to hit a golfball)
+	 * -Every subcue in a certain time range around current beat (the golfballs flying)
+	 * -Every input in a certain time range before the current beat (imagine you are the monkey in hole in one and every input throws a golfball, the golfballs would )*/
 	
 	public Remix(ObjectMapper mapper, Handler handler) {
 		this.mapper = mapper;
 		this.handler = handler;
 		this.game = handler.getGame();
-		
+		this.inputs = new RemixInputs();
 		this.currentGame = new HoleInOneFever(mapper, handler);
 		try {
 			this.data = mapper.readValue(new File("Remix/testRemix.json"), RemixData.class);
@@ -51,7 +63,7 @@ public class Remix {
 	
 	public void update(Graphics2D g2D, Canvas c) {
 		double timePassed = game.getTimePassed();
-		double beat = timePassed*data.getBPM()/60000;
+		double beat = getBeat(timePassed, data.getBPM());
 		
 		MinigameChange lastChange = null;
 		for(MinigameChange change : data.getChanges()) {
@@ -74,9 +86,18 @@ public class Remix {
 		
 		currentGame.draw(g2D, c, beat, data.getBPM(), data.getCues());
 		g2D.drawString(String.valueOf(beat), 10, 10);
+		int inputSize = inputs.getPrimaryInputs().size();
+		g2D.drawString(String.valueOf(inputSize), 10, 20);
+		if(inputSize > 0) {
+			g2D.drawString(String.valueOf(inputs.getPrimaryInputs().get(inputSize-1).beat), 10, 30);
+		}
 	}
 	
 	public void changeMinigame(Minigame.MinigameEnum minigame) {
 
+	}
+	
+	public double getBeat(double timePassed, double BPM) {
+		return timePassed*BPM/60000;
 	}
 }
